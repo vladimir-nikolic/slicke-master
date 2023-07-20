@@ -24,7 +24,7 @@ function Login() {
     <>
       <section className="heading">
         <h1>
-          <FaSignInAlt className="bigIcon"/>
+          <FaSignInAlt className="bigIcon" />
           <span>Log In</span>
         </h1>
         <p>Please enter your data</p>
@@ -62,7 +62,7 @@ function Login() {
             </button>
           </div>
           <div className="form-control">
-            <span>All Ready User ?</span>
+            <span>You need an account ?</span>
             <Link to="/register">
               <span className="button"> Register </span>
             </Link>

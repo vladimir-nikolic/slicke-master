@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
+import { register, reset } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    confEmail: "",
     password: "",
-    country: "",
+    password_confirmation: "",
+    country_id: "",
+    membership_id: "",
   });
 
   const onChange = (e) => {
@@ -17,12 +22,51 @@ function Register() {
       [e.target.name]: e.target.value,
     }));
   };
+  /*"name": [
+            "The name field is required."
+        ],
+        "email": [
+            "The email field is required."
+        ],
+        "password": [
+            "The password field is required."
+        ],
+        "country_id": [
+            "The country id field is required."
+        ],
+        "membership_id": [
+            "The membership id field is required."
+        ]*/
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const userData = {
+      name,
+      email,
+      password,
+      password_confirmation,
+      country_id,
+      membership_id,
+    };
+    dispatch(register(userData));
   };
 
-  const { name, email, confEmail, password, country } = formData;
+  const {
+    name,
+    email,
+    password,
+    password_confirmation,
+    country_id,
+    membership_id,
+  } = formData;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   return (
     <>
       <section className="heading">
@@ -43,7 +87,7 @@ function Register() {
               placeholder="Enter your name"
               onChange={onChange}
             />
-          </div>{" "}
+          </div>
           <div className="form-group">
             <input
               type="email"
@@ -52,17 +96,6 @@ function Register() {
               name="email"
               value={email}
               placeholder="Enter your email"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control"
-              id="confEmail"
-              name="confEmail"
-              value={confEmail}
-              placeholder="Confirm Email"
               onChange={onChange}
             />
           </div>
@@ -79,12 +112,34 @@ function Register() {
           </div>
           <div className="form-group">
             <input
+              type="password"
+              className="form-control"
+              id="password_confirmation"
+              name="password_confirmation"
+              value={password_confirmation}
+              placeholder="password confirmation"
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <input
               type="text"
               className="form-control"
-              id="country"
-              name="country"
-              value={country}
+              id="country_id"
+              name="country_id"
+              value={country_id}
               placeholder="Enter country"
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              id="membership_id"
+              name="membership_id"
+              value={membership_id}
+              placeholder="membership"
               onChange={onChange}
             />
           </div>
