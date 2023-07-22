@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -22,21 +23,6 @@ function Register() {
       [e.target.name]: e.target.value,
     }));
   };
-  /*"name": [
-            "The name field is required."
-        ],
-        "email": [
-            "The email field is required."
-        ],
-        "password": [
-            "The password field is required."
-        ],
-        "country_id": [
-            "The country id field is required."
-        ],
-        "membership_id": [
-            "The membership id field is required."
-        ]*/
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -66,6 +52,23 @@ function Register() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+
+  if(isLoading){
+    return <Spinner />
+  }
 
   return (
     <>
