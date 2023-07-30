@@ -9,7 +9,7 @@ import "./App.css";
 import { store } from "./app/store";
 
 function App() {
-  console.log(store)
+  //console.log(store)
   return (
     <>
       <Router>

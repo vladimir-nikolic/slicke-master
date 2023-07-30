@@ -6,8 +6,37 @@ import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import axios from "axios";
 
 function Register() {
+
+  const [country, setCountry] = useState('')
+  const [membership, setMembership] = useState('')
+
+
+  useEffect(() => {
+    const fetchCountry = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/get_all_countries`
+      );
+      setCountry(response.data);
+    };
+    fetchCountry();
+  }, []);
+
+  useEffect(() => {
+    const fetchMembership = async () => {
+      let response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/get_all_membership`
+      );
+      setMembership(response.data);
+    };
+    fetchMembership();
+  }, []);
+
+  
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

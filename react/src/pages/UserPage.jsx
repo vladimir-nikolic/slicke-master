@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
 
 function UserPage() {
-  return (
-    <div>User</div>
-  )
+  return <div>Hello</div>;
 }
 
-export default UserPage
+export default UserPage;
