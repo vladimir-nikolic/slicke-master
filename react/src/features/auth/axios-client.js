@@ -1,12 +1,11 @@
 import axios from "axios";
-import {useStateContext} from "./context/ContextProvider.jsx";
 
 const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`
+  baseURL: ''
 })
 
 axiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token').parse;
+  const token = JSON.parse(localStorage.getItem('token'));
   config.headers.Authorization = `Bearer ${token}`
   return config;
 })

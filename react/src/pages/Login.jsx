@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaSignInAlt } from "react-icons/fa";
-
-import { login, reset } from "../features/auth/authSlice";
+import { login, reset } from "../features/auth/authSlice"
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,7 +12,9 @@ function Login() {
     email: "",
     password: "",
   });
-
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();  
   const onChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -30,13 +31,7 @@ function Login() {
     dispatch(login(userData));
   };
 
-  const {
-    email,
-    password,
-  } = formData;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { email, password } = formData;
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -48,15 +43,14 @@ function Login() {
     }
 
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/user");
     }
 
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-
-  if(isLoading){
-    return <Spinner />
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (

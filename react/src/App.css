@@ -52,11 +52,16 @@ h3 {
   margin-bottom: 60px;
 }
 
-.header ul {
+.header a {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+nav {
+  display:flex;
+  gap: 30px;
+}
+
 
 .header ul li {
   margin-left: 20px;
@@ -212,9 +217,4 @@ h3 {
   .heading p {
     font-size: 1.5rem;
   }
-}
-
-.bigIcon {
-  size: 40px;
-  padding-top: 15px;
 }

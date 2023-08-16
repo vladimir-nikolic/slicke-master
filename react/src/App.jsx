@@ -1,29 +1,26 @@
-import { BrowserRouter as Router,Routes,Route} from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import UserPage from './pages/UserPage';
-import Header from "./components/Header";
-import Login from './pages/Login';
-import Register from './pages/Register';
 import "./App.css";
-import { store } from "./app/store";
+import Header from "./components/Header";
+import GuestLayout from "./layout/GuestLayout";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from './pages/Login'
+import Register from './pages/Register'
+import HomePage from "./pages/HomePage";
+import UserPage from "./pages/UserPage";
 
 function App() {
-  //console.log(store)
   return (
-    <>
-      <Router>
-        <div className="container">
-          <Header />
-          <Routes>
-            <Route path="/" element={<UserPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </div>
-      </Router>
-      <ToastContainer />
-    </>
+    <BrowserRouter>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<GuestLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="user" element={<UserPage />} />
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

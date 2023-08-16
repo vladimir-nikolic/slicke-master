@@ -1,49 +1,14 @@
 import { useState, useEffect } from "react";
-import { register, reset } from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import Spinner from "../components/Spinner";
-import axios from "axios";
+import { Link } from 'react-router-dom';
 
 function Register() {
-
-  const [country, setCountry] = useState('')
-  const [membership, setMembership] = useState('')
-
-
-  useEffect(() => {
-    const fetchCountry = async () => {
-      let response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/get_all_countries`
-      );
-      setCountry(response.data);
-    };
-    fetchCountry();
-  }, []);
-
-  useEffect(() => {
-    const fetchMembership = async () => {
-      let response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/get_all_membership`
-      );
-      setMembership(response.data);
-    };
-    fetchMembership();
-  }, []);
-
-  
-
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    confEmail: "",
     password: "",
-    password_confirmation: "",
-    country_id: "",
-    membership_id: "",
+    country: "",
   });
 
   const onChange = (e) => {
@@ -55,50 +20,9 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      name,
-      email,
-      password,
-      password_confirmation,
-      country_id,
-      membership_id,
-    };
-    dispatch(register(userData));
   };
 
-  const {
-    name,
-    email,
-    password,
-    password_confirmation,
-    country_id,
-    membership_id,
-  } = formData;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
-    if (isSuccess || user) {
-      navigate("/");
-    }
-
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
-
-
-  if(isLoading){
-    return <Spinner />
-  }
-
+  const { name, email, confEmail, password, country } = formData;
   return (
     <>
       <section className="heading">
@@ -119,7 +43,7 @@ function Register() {
               placeholder="Enter your name"
               onChange={onChange}
             />
-          </div>
+          </div>{" "}
           <div className="form-group">
             <input
               type="email"
@@ -128,6 +52,17 @@ function Register() {
               name="email"
               value={email}
               placeholder="Enter your email"
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="email"
+              className="form-control"
+              id="confEmail"
+              name="confEmail"
+              value={confEmail}
+              placeholder="Confirm Email"
               onChange={onChange}
             />
           </div>
@@ -144,34 +79,12 @@ function Register() {
           </div>
           <div className="form-group">
             <input
-              type="password"
-              className="form-control"
-              id="password_confirmation"
-              name="password_confirmation"
-              value={password_confirmation}
-              placeholder="password confirmation"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
               type="text"
               className="form-control"
-              id="country_id"
-              name="country_id"
-              value={country_id}
+              id="country"
+              name="country"
+              value={country}
               placeholder="Enter country"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="membership_id"
-              name="membership_id"
-              value={membership_id}
-              placeholder="membership"
               onChange={onChange}
             />
           </div>
